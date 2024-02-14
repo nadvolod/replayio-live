@@ -8,9 +8,6 @@ import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-import java.io.File;
-import java.net.URI;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Replay {
@@ -18,19 +15,18 @@ public class Replay {
 
     @Test
     public void browserTest(){
-//        WebDriver driver = new ChromeDriver();
-//        File driverPath = new File(".replay/runtimes/Replay-Chromium.app/Contents/MacOS/Chromium");
+        // userHome property makes sure that we are going to reference Replay Browser location from home directory
         String userHome = System.getProperty("user.home");
+        // this path may differ on different operating systems
         String replayPath = userHome + "/.replay/runtimes/Replay-Chromium.app/Contents/MacOS/Chromium";
-//        File driverPath = new File(replayPath);
-//        System.setProperty("webdriver.chrome.driver", replayPath);
 
         ChromeDriverService service =
                 new ChromeDriverService.Builder()
                         .usingAnyFreePort()
                         .build();
+                        
         ChromeOptions options = new ChromeOptions();
-        options.setBinary(replayPath);
+        options.setBinary(replayPath); // we are using Chrome driver, but we are using the Replay Browser binary
         options.setBrowserVersion("108");
         driver = new ChromeDriver(service, options);
         driver.get("https://www.saucedemo.com/");
